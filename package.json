@@ -7,7 +7,6 @@
     "start": "nodemon index",
     "build": "node index",
     "serve": "nodemon server.js"
-
   },
   "author": "Projcet Team",
   "license": "ISC",

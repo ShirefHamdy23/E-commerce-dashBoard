@@ -22,4 +22,4 @@
 
 
 
-/////////////////don't foget your mysql and apacher services/////////////////
+/////////////////don't foget your mysql and apache services/////////////////

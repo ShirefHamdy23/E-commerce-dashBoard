@@ -10,7 +10,7 @@ app.use(cors());
 const auth = require("./routes/Auth");
 const porducts = require("./routes/products");
 
-app.listen(4000,"localhost",()=>{
+app.listen(5500,"localhost",()=>{
     console.log("SERVER IS RUNNING !");
 });
 

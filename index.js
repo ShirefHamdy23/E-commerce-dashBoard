@@ -18,7 +18,3 @@ app.use("./routes/Auth.js",auth);
 app.use("./routes/Products.js",porducts);
 
 console.log("ALL IS DONE !");
-console.log("ALL IS DONE !");
-console.log("ALL IS DONE !");
-console.log("ALL IS DONE !");
-console.log("ALL IS DONE !");

@@ -2,8 +2,6 @@ const router = require("express").Router();
 module.exports = router;
 const connection = require("../DB/dbConnection");
 
-const router = require("express").Router();
-const conn = require("../db/dbConnection");
 const { body, validationResult } = require("express-validator");
 const util =require("util");//helper
 const bcrypt =require("bcrypt");

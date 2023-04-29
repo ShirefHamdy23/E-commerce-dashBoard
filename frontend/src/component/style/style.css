@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap");
+.navbar.navbar-expand-lg.bg-dark .container-fluid .navbar-brand {
+  color: #fff;
+  font-size: 2em;
+}
+.navbar.navbar-expand-lg.bg-dark .container-fluid .collapse.navbar-collapse .navbar-nav.ms-auto.me-2.mb-lg-0 li a {
+  transition-duration: 0.5s;
+  color: #fff;
+  margin: 5px;
+}
+.navbar.navbar-expand-lg.bg-dark .container-fluid .collapse.navbar-collapse .navbar-nav.ms-auto.me-2.mb-lg-0 li a.active, .navbar.navbar-expand-lg.bg-dark .container-fluid .collapse.navbar-collapse .navbar-nav.ms-auto.me-2.mb-lg-0 li a:hover {
+  background-color: #ddd;
+  font-size: 1.2em;
+  color: black;
+  border-radius: 23px;
+  transition-duration: 0.5s;
+}/*# sourceMappingURL=style.css.map */

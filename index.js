@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./DB/dbConnection");
 const userRouter = require("./routes/usersRoutes");
+const crudRouter = require("./routes/CRUD");
 db.connection;
 
 app.use(express.json());
@@ -20,6 +21,7 @@ app.listen(3306,"localhost",()=>{
 });
 
 app.use("./users", userRouter);
+app.use("./crud", crudRouter);
 app.use("./routes/Auth.js", auth);
 app.use("./routes/products.js", products);
 console.log("ALL IS DONE !");

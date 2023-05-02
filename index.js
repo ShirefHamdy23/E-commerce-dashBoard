@@ -3,8 +3,6 @@ const app = express();
 const db = require("./DB/dbConnection");
 const userRouter = require("./routes/usersRoutes");
 db.connection;
-
-app.use(express.json());
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(express.static('uploads'));
@@ -20,9 +18,8 @@ app.listen(5500,"localhost",()=>{
     console.log("SERVER IS RUNNING !");
 });
 
-app.use("/users",userRouter);
+app.use("./users",userRouter);
 app.use("./routes/Auth.js",auth);
 app.use("./routes/Products.js",porducts);
-app.listen(5500);
 console.log("ALL IS DONE !");
 

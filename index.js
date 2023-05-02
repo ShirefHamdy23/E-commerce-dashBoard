@@ -15,7 +15,7 @@ const auth = require("./routes/Auth");
 const products = require("./routes/products");
 const { cookie } = require("express-validator");
 
-app.listen(5500,"localhost",()=>{
+app.listen(3306,"localhost",()=>{
     console.log("SERVER IS RUNNING !");
 });
 

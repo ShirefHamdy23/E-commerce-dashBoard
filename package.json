@@ -4,7 +4,7 @@
   "description": "React , Node & Express JS Project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index",
+    "start": "nodemon index ",
     "build": "node index",
     "serve": "nodemon server.js"
   },

@@ -35,10 +35,11 @@ router.post('/signIn', async (req, res, next) => {
         db.query(sqlCheck, (req, res, fields) => {
             sqlResult = res[1];
         });
-        if(sqlResult != req[1]){
+        if (sqlResult != req[1]) {
             'incorrect password'
-        }else{
-            'logged in successfully';}
+        } else {
+            'logged in successfully';
+        }
     } else {
         res.send('incorrect email or password');
     }

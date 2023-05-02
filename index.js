@@ -16,12 +16,12 @@ const auth = require("./routes/Auth");
 const products = require("./routes/products");
 const { cookie } = require("express-validator");
 
-app.listen(3306,"localhost",()=>{
+app.listen(5500,"localhost",()=>{
     console.log("SERVER IS RUNNING !");
 });
 
-app.use("./users", userRouter);
-app.use("./crud", crudRouter);
+app.use("/users", userRouter);
+app.use("/crud", crudRouter);
 app.use("./routes/Auth.js", auth);
 app.use("./routes/products.js", products);
 console.log("ALL IS DONE !");

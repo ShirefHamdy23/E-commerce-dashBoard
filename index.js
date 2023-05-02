@@ -2,18 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./DB/dbConnection");
 const userRouter = require("./routes/usersRoutes");
-const IP = require('ip')
 db.connection;
-
-app.get("/", function (req, res) {
-    console.log(req.socket.remoteAddress);
-    console.log(req.ip);
-    res.send("your IP is: " + req.ip);
-});
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log("server running on port: " + PORT);
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +15,7 @@ const auth = require("./routes/Auth");
 const products = require("./routes/products");
 const { cookie } = require("express-validator");
 
-app.listen(3000,"localhost",()=>{
+app.listen(5500,"localhost",()=>{
     console.log("SERVER IS RUNNING !");
 });
 

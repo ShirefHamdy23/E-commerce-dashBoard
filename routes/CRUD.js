@@ -5,25 +5,37 @@ const { Result } = require('express-validator');
 const { connection } = require('../DB/dbConnection');
 const crudRouter = express.Router();
 
-crudRouter.get('/', async (req, res, next) => {//read
-    console.log("Hello From DB");
-    res.send('hello from response');
-    let sqlQuery = "SELECT * FROM 'products'";
-    await db.query(sqlQuery, (errors, results, fields) => {
-        console.log(results);
-    });
-})
 
-crudRouter.post('/', async (req, res, next) => {//create
+crudRouter.get('/', async (req, res, next) => {//read
     var name = req.body.name
-    await db.query('SELECT * FROM products WHERE name = ?', [name], async function(error, results, fields) {
+    await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);
         var len = keys.length;
-        if (len == 0) { 
+        if (len != 0) {
+            const sqlInsert = "SELECT * FROM products where name = ?"
+            const insert_query = mysql.format(sqlInsert, name)
+            await db.query(insert_query, (error, results, fields) => {
+                keys.forEach(function(key) {
+                    var result = results[key];      
+                    console.log("Product Name : " + result.name + "\nProduct Price : "+result.price+"\nProduct Description : "+ result.description)  
+            });
+                res.send('Product Exist');
+            });
+        } else {
+            res.send("product Not Exist !!");
+        }
+    });
+})
+crudRouter.post('/', async (req, res, next) => {//create
+    var name = req.body.name
+    await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {
+        var keys = Object.keys(results);
+        var len = keys.length;
+        if (len == 0) {
             const sqlInsert = "INSERT INTO products(name, price, description,categoryID)VALUES (?,?,?,?)"
-            const insert_query = mysql.format(sqlInsert, [req.body.name,req.body.price,req.body.description,req.body.categoryID])
+            const insert_query = mysql.format(sqlInsert, [req.body.name, req.body.price, req.body.description, req.body.categoryID])
             console.log(insert_query);
-            await db.query(insert_query,(error, results, fields) => {
+            await db.query(insert_query, (error, results, fields) => {
                 res.send('product added');
             });
         } else {
@@ -31,16 +43,16 @@ crudRouter.post('/', async (req, res, next) => {//create
         }
     });
 })
-crudRouter.delete('/', async (req, res, next) => {//create
+crudRouter.delete('/', async (req, res, next) => {//delete
     var name = req.body.name
-    await db.query('SELECT * FROM products WHERE name = ?', [name], async function(error, results, fields) {
+    await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);
         var len = keys.length;
-        if (len != 0) { 
+        if (len != 0) {
             const sqlInsert = "DELETE FROM products WHERE name = ?"
             const insert_query = mysql.format(sqlInsert, [req.body.name])
             console.log(insert_query);
-            await db.query(insert_query,(error, results, fields) => {
+            await db.query(insert_query, (error, results, fields) => {
                 res.send('product Deleted');
             });
         } else {

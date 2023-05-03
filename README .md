@@ -1,5 +1,5 @@
 # E-commerce-Dashboard
-nodemon ./index.js localhost 5500
+nodemon .index.js localhost 5500
 
 *API :*
 localhost:5500/crud/ -> Use post / put / delete / get  Methods on postman 

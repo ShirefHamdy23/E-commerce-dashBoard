@@ -3,7 +3,9 @@ const db = require('../DB/dbConnection');
 const mysql = require("mysql");
 const { Result } = require('express-validator');
 const { connection } = require('../DB/dbConnection');
+const { log } = require('console');
 const crudRouter = express.Router();
+
 
 
 crudRouter.get('/readSpecificRow', async (req, res, next) => {//read
@@ -63,27 +65,64 @@ crudRouter.post('/', async (req, res, next) => {//create
         }
     });
 })
-crudRouter.put('/', async (req, res, next) => {//create
-    const data = req.body.id
-    var rowDataPacket;
-    await db.query("SELECT * FROM products WHERE pID = ?",[data], async function (error, results, fields) {
+
+
+
+crudRouter.put('/', async (req, res, next) => {//update
+    var finder = req.body.id
+    data = {}
+    var name = req.body.name;
+    var price = req.body.price;
+    var description = req.body.description;
+    var categoryID = req.body.categoryID;
+
+    if (name != null) {
+        name = req.body.name
+        data['name'] = name;
+    }
+    if (price != null) {
+        price = req.body.price
+        data['price'] = price;
+    }
+    if (description != null) {
+        description = req.body.description
+        data['description'] = description;
+    }
+    if (categoryID != null) {
+        price = req.body.categoryID
+        data['categoryID'] = categoryID;
+    }
+    function generateUpdateQuery(data, tableName, clauseKey, clauseValue) {
+        let part1 = `UPDATE ${tableName} SET`;
+        let part2 = `WHERE ${clauseKey} = '${clauseValue}';`; //Add any number of filter clause statements here
+        let updateString = "";
+        for (let key in data) {
+            updateString += ` \`${key}\` = '${data[key]}',`;
+        }
+        updateString = updateString.slice(0, -1);
+        let query = `${part1} ${updateString} ${part2}`;
+        return query;
+    }
+
+    var query = generateUpdateQuery(data, 'products', 'pID', finder);
+
+    console.log(query);
+    await db.query("SELECT * FROM products WHERE pID =  ?", [finder], async function (error, results, fields) {
         var keys = Object.keys(results);
-        rowDataPacket = JSON.parse(JSON.stringify(results))
-        console.log(rowDataPacket[0]['name']);
-        
         var len = keys.length;
+        console.log(len);
         if (len != 0) {
-            //const sqlInsert = "UPDATE `products` set `name` = ? , 'price' = ? ,'description' = ?, 'categoryID' = ? where 'pID' = ?";
-            //const insert_query = mysql.format(sqlInsert, [data.name,data.price , data.description ,data.categoryID,dataFinder])
-            //console.log(insert_query);
-            //await db.query(insert_query, (error, results, fields) => {
+            db.query(query, (error, results, fields) => {
+                console.log(results);
                 res.send('product updated');
-            //});
+            });
         } else {
-            res.send("product Not Exist !!");
+            res.send("product NOT Exist !!");
         }
     });
 })
+
+
 crudRouter.delete('/', async (req, res, next) => {//delete
     var name = req.body.name
     await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {

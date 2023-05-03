@@ -1,49 +1,58 @@
-const express = require('express');
-const db = require('../DB/dbConnection');
-const { Result } = require('express-validator');
-const { connection } = require('../DB/dbConnection');
+const express = require("express");
+const mysql = require("mysql");
+const db = require("../DB/dbConnection");
+const { Result } = require("express-validator");
+const { connection } = require("../DB/dbConnection");
 const router = express.Router();
-
 
 router.post('/signup', async (req, res, next) => {
     console.log("Hello From DB");
-    res.send('hello from response');
-    let sqlCheck = ` select email from users where email = ${req[0]} `;
-    db.query(sqlCheck, (req, res, fields) => {
-        sqlResult = res[0];
-    });
-    if (sqlResult == req[0]) {
-        res.send('user already exist');
-    } else {
-        let sqlINsert = "INSERT INTO `users` (`email`, `firstName`, `lastName`, `password`,`phone`,`type`, `status`) VALUES (`${res[0]}`, `res[1]`, `res[2]`, `res[3]`, `res[4]`, 'active', 'user')"
-        db.query(sqlINsert, (req, res, fields) => {
-            res.send('user added');
-        });
-    }
-    console.log('it works');
-    db.end();
-})
-router.post('/signIn', async (req, res, next) => {
-    console.log("Hello From DB");
-    res.send('hello from response');
-    let sqlCheck = ` select email from users where email = ${req[0]} `;
-    db.query(sqlCheck, (req, res, fields) => {
-        sqlResult = res[0];
-    });
-    if (sqlResult == req[0]) {
-        sqlCheck = ` select password from users where password = ${req[1]} `;
-        db.query(sqlCheck, (req, res, fields) => {
-            sqlResult = res[1];
-        });
-        if (sqlResult != req[1]) {
-            'incorrect password'
+    var email = req.body.email
+    await db.query('SELECT * FROM users WHERE email = ?', [email], async function (error, results, fields) {
+        var keys = Object.keys(results);
+        var len = keys.length;
+        if (len == 0) { 
+            console.log("gdgdgdg");
+            const sqlInsert = "INSERT INTO users(firstName, lastName, email, password, phone, type, status)VALUES (?,?,?,?,?,'user','active')"
+            const insert_query = mysql.format(sqlInsert, [req.body.firstName,req.body.lastName,req.body.email,req.body.password,req.body.phone])
+            console.log(insert_query);
+            await db.query(insert_query,(error, results, fields) => {
+                res.send('user added');
+            });
         } else {
-            'logged in successfully';
+            res.send("Email Already Exist !!");
         }
-    } else {
-        res.send('incorrect email or password');
-    }
+    });
     console.log('it works');
-    db.end();
 })
+
+router.post('/signIn', async (request, response, next) => {
+    var email = request.body.email;
+    var password = request.body.password;
+    if (email && password) {
+        await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (error, results, fields) => {
+            var keys = Object.keys(results);
+            var len = keys.length;
+            console.log(results);
+            if (len != 0) {
+                emailFromQuery = results[0]["email"];
+                if (emailFromQuery == email) {
+                    console.log('email correct');
+                    if (results[0]["password"] == password) {
+                        //response.redirect('/home')
+                        response.send('password correct');
+                    } else {
+                        response.send('password incorrect');
+                    }
+                } else {
+                    response.send('Incorrect Email or password!');
+                }
+            } else {
+                response.send('incorrect data')
+            }
+        });
+    } else {
+        response.send('Please enter email and/or Password!');
+    }
+});
 module.exports = router;

@@ -1,0 +1,20 @@
+.movie-image{
+    width: 100%;
+    border-radius: 10px;
+    height: 300px;
+}
+.review-container{
+    border-radius :10px;
+    border:1px solid;
+    margin-bottom: 10px;
+    padding:1rem;
+}
+.text1{
+    margin-right: 90%;    
+}
+.price{
+  color: blue;
+  text-align: center;
+  font-style: italic;
+  
+}

@@ -27,7 +27,6 @@ crudRouter.get('/readSpecificRow', async (req, res, next) => {//read
     });
 })
 crudRouter.get('/', async (req, res, next) => {//read
-    var name = req.body.name
     await db.query('SELECT * FROM products', async function (error, results, fields) {
         var keys = Object.keys(results);
         var len = keys.length;

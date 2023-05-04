@@ -4,10 +4,10 @@ const mysql = require("mysql");
 const { Result } = require('express-validator');
 const { connection } = require('../DB/dbConnection');
 const { log } = require('console');
-const crudRouter = express.Router();
+const crudRouter = express.Router(); //new like this
 
 
-
+//edit like this
 crudRouter.get('/readSpecificRow', async (req, res, next) => {//read
     var name = req.body.name
     await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {
@@ -28,8 +28,11 @@ crudRouter.get('/readSpecificRow', async (req, res, next) => {//read
         }
     });
 })
+
 crudRouter.get('/', async (req, res, next) => {//read
     await db.query('SELECT * FROM products', async function (error, results, fields) {
+        console.log(results);
+        console.log(results[0]['name']);
         var keys = Object.keys(results);
         var len = keys.length;
         keys.forEach(function (key) {

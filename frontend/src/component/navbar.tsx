@@ -6,7 +6,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
-            E-commerce
+            E-Commerce-Dashboard
           </NavLink>
           <button
             className="navbar-toggler"
@@ -20,22 +20,25 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto me-2 mb-lg-0 ">
-              <li className="nav-item">
-                <NavLink className="nav-link" aria-current="page" to="/">
-                  Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/login">
-                  login
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/rejecter">
-                  register
-                </NavLink>
-              </li>
+            <ul className="navbar-nav ms-auto me-2 nav-pills ">
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link " aria-current="page" to="/">
+                    Home
+                  </NavLink>
+                </li>
+
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">
+                    Login
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/rejecter">
+                    Rejecter
+                  </NavLink>
+                </li>
+              </>
             </ul>
           </div>
         </div>

@@ -17,13 +17,13 @@ app.set('front-end', '/front-end');
 const auth = require("./routes/Auth");
 const { cookie } = require("express-validator");
 
-app.listen(3000,"localhost",()=>{
+app.listen(5500,"localhost",()=>{
     console.log("SERVER IS RUNNING !");
 });
 
+app.use("/crudOrders", ordersRouter);
 app.use("/users", userRouter);//add like this
 app.use("/crudCategory", categoryRouter);
 app.use("/crud", crudRouter);
-app.use("/crudorders", ordersRouter);
 console.log("ALL IS DONE !");
 

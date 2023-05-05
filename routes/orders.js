@@ -32,14 +32,13 @@ ordersRouter.get('/readSpecificRow', async (req, res, next) => {//read
 
 
 ordersRouter.get('/', async (req, res, next) => {//read
-    await db.query('SELECT * FROM orders = ?', async function (error, results, fields) {
+    await db.query('SELECT * FROM orders', async function (error, results, fields) {
         console.log(results);
-        console.log(results[0]['orderID']);
         var keys = Object.keys(results);
         var len = keys.length;
         keys.forEach(function (key) {
             var result = results[key];
-            console.log( "orders Price : " + result.price + "\norders date : " + result.date + "\norders SKU :  " + result.sku + "\norders id :  " + result.orderID + "\nproducts id :  " + result.pID  + "\nuser id :  " + result.userID )
+            console.log( "orders Price : " + result.price + "\norders date : " + result.date + "\norders SKU :  " + result.SKU + "\norders id :  " + result.orderID + "\nproducts id :  " + result.pID  + "\nuser id :  " + result.userID )
         });
         res.send('check terminal');
     });
@@ -52,7 +51,7 @@ ordersRouter.post('/', async (req, res, next) => {//create
         var keys = Object.keys(results);
         var len = keys.length;
         if (len == 0) {
-            const sqlInsert = "INSERT INTOorders(orderID, price, SKU, date, pID, userID)VALUES (?,?,?,?,?,?)"
+            const sqlInsert = "INSERT INTO orders(orderID, price, SKU, date, pID, userID)VALUES (?,?,?,?,?,?)"
             const insert_query = mysql.format(sqlInsert, [req.body.orderID, req.body.price, req.body.sku, req.body.date, req.body.pID, req.body.userID])
             console.log(insert_query);
             await db.query(insert_query, (error, results, fields) => {

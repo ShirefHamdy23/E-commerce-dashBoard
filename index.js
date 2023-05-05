@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const db = require("./DB/dbConnection");
 const userRouter = require("./routes/usersRoutes");
-const crudRouter = require("./routes/CRUD");
-const categoryRouter = require("./routes/category"); //add like this
+const crudRouter = require("./routes/products");//add like this
+const categoryRouter = require("./routes/category");
+const ordersRouter = require("./routes/orders");
 db.connection;
 
 app.use(express.json());
@@ -23,5 +24,6 @@ app.listen(5500,"localhost",()=>{
 app.use("/users", userRouter);//add like this
 app.use("/crudCategory", categoryRouter);
 app.use("/crud", crudRouter);
+app.use("/crudorders", ordersRouter);
 console.log("ALL IS DONE !");
 

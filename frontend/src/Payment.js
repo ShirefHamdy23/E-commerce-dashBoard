@@ -1,6 +1,6 @@
 import React from 'react';
 import '../src/component/style/ProductCard.css'
-
+import '../src/component/style/Payment.css'
 const Payment = () => {
     return (
         <div className='review-container'>
@@ -39,8 +39,8 @@ const Payment = () => {
             <div class="col-lg-4 mb-lg-0 mb-3">
                 <div class="card p-3">
                     <div class="img-box">
-                        {/* <img src="https://www.freepnglogos.com/uploads/discover-png-logo/credit-cards-discover-png-logo-4.png"
-                            alt=""> */}
+                         <img src="https://www.freepnglogos.com/uploads/discover-png-logo/credit-cards-discover-png-logo-4.png"
+                            alt=""/> 
                     </div>
                     <div class="number">
                         <label class="fw-bold">**** **** **** 1060</label>

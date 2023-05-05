@@ -17,7 +17,7 @@ app.set('front-end', '/front-end');
 const auth = require("./routes/Auth");
 const { cookie } = require("express-validator");
 
-app.listen(5500,"localhost",()=>{
+app.listen(3000,"localhost",()=>{
     console.log("SERVER IS RUNNING !");
 });
 

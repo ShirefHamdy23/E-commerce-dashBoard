@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import React from 'react';
-
+import React from "react";
 
 const Login = () => {
   return (
     <>
-      <div className="back"></div>
       <div className="login-box">
         <h2>Login</h2>
         <form method="POST">
@@ -34,14 +32,7 @@ const Login = () => {
 export default Login;
 // user
 
-
-
-
-
-
-
 //USING useState , useEffect , APIS
-
 
 // import { Link } from "react-router-dom";
 // import React, { useState } from "react";
@@ -52,8 +43,6 @@ export default Login;
 // import axios from "axios";
 // import { setAuthUser } from "../helper/Storage";
 // import { useNavigate } from "react-router-dom";
-
-
 
 // const Login = () => {
 //   const navigate = useNavigate();
@@ -89,7 +78,7 @@ export default Login;
 //       <div className="back"></div>
 //       <div className="login-box">
 //         <h2>Login</h2>
-        
+
 //       {login.err.map((error, index) => (
 //         <Alert key={index} variant="danger" className="p-2">
 //           {error.msg}

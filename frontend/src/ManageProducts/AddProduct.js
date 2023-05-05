@@ -203,7 +203,8 @@
 //             className="form-control"
 //             rows={5}
 //             value={description}
-//             onChange={(e) => setDescription(e.target.value)}
+//             onChange={(e) => setDesc	Fifa 23	Some quick example text to build the card title	￼DeleteUpdateShow
+2	￼	Samsung A52s	Some quick example text to build the card titleription(e.target.value)}
 //           ></textarea>
 //         </Form.Group>
 //         <Form.Group className="mb-3">
@@ -306,7 +307,14 @@ const AddProduct = ({ addProduct }) => {
 
         <Form.Group className="mb-3">
           <textarea
-            className="form-control"
+            className="form-coconst AddProduct = ({ addProduct }) => {
+  const [product, setProduct] = useState({
+    name: "",
+    description: "",
+    err: "",
+    loading: false,
+    success: null,
+  });ntrol"
             placeholder="Description"
             value={product.description}
             required

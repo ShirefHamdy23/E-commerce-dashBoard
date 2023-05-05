@@ -16,24 +16,22 @@ import Footer from "./component/Footer";
 import ProductList from "./Categories/ProductList";
 import ProductList2 from "./Categories/ProductList2";
 import ProductList3 from "./Categories/ProductList3";
-
-
-
-
+import Cart from "./component/cats";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
       <Routes>
-      <Route path ="/gaming" element={<ProductList3/>}/>
+        <Route path="/gaming" element={<ProductList3 />} />
 
-        <Route path ="/mobiles" element={<ProductList/>}/>
-        <Route path ="/brands" element={<ProductList2/>}/>
+        <Route path="/mobiles" element={<ProductList />} />
+        <Route path="/brands" element={<ProductList2 />} />
 
         <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/rejecter" element={<Rejecter />} />
-        { <Route path="/" element={<Home />} /> }
+        {<Route path="/" element={<Home />} />}
         <Route path="/mobiles" element={<Mobiles />} />
         <Route path="/brands" element={<Brands />} />
         <Route path="/gaming" element={<Gaming />} />
@@ -42,23 +40,9 @@ function App() {
 
         <Route path="/manage-products" element={<ManageProducts />} />
         <Route path="/manage-products/add" element={<AddProduct />} />
-        <Route path="/manage-products/update" element={< UpdateProduct/>} />
-
-</Routes>
-<Footer/>
-
-
-
-
-        
-
-
-
-        
-
-
-
-      
+        <Route path="/manage-products/update" element={<UpdateProduct />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }

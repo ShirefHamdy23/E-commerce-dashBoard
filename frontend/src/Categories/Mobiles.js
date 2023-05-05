@@ -9,12 +9,10 @@
 // import { Button } from 'react-bootstrap';
 // import { PRODS } from '../';
 
-
-
 //  const Mobiles=(props)=>{
-    
+
 // //     let{ id}=useParams();
-    
+
 // //     const[product,setproduct]=useState({
 // //         loading: true,
 // //         results:null,
@@ -25,7 +23,6 @@
 // //         axios.get("http://localhost:4000/products/"+id )
 // //         .then(resp=>{
 // //             setproduct({...product, result:resp.data,loading:false,err:null})
-
 
 // //         })
 // //         .catch(err=>{
@@ -38,7 +35,7 @@
 
 //     return(
 //         <div className='-details.container p-5'>
-           
+
 //             <div className='row'>
 //                 <div className="col-3">
 //                     <img className="product-image" src="https://mob4me.com/Assets/front/images/mobile/iphone-11-pro-large.jpg"alt=""/>
@@ -48,8 +45,6 @@
 //                     <h3>Iphone </h3>
 //                 <p>
 //                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-
 
 //                 </p>
 //                 <div class="price">
@@ -72,7 +67,6 @@
 //                 <p>
 //                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
-
 //                 </p>
 //                 <div class="price">
 // 								<h4>PRICE : $50</h4>
@@ -82,65 +76,102 @@
 
 // </Button>
 
-
 //                 </div>
-                
+
 //             </div>
 //             <hr/>
-            
+
 //             <h5 className="text-center bg-dark text-white p-2">Review Products</h5>
 
 //             <ReviewProduct/>
 //             <ReviewProduct/>
-            
 
-
-        
 //         </div>
 //     );
 // };
 // export default Mobiles;
-import React from 'react';
-import ReviewProduct from '../ReviewProduct';
-import "../component/style/Mobiles.css"
-import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import ReviewProduct from "../ReviewProduct";
+import "../component/style/Mobiles.css";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 // import "../component/style/Payment.css"
 
-
 const Mobiles = ({ products }) => {
+  const [input, setInput] = useState({
+    quantity: 0,
+  });
+  const handelChange = (e) => {
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const [items, setItems] = useState([]);
+
+  const fun = (id, name, price, image) => {
+    setItems({
+      id: id,
+      name: name,
+      price: price,
+      image: image,
+      quantity: input.quantity,
+    });
+    console.log("done");
+  };
+
+  useEffect(() => {
+    localStorage.setItem(`Mobiles${items.id}`, JSON.stringify(items));
+  }, [items]);
+
   return (
-    <div className='-details.container p-5'>
-      {products && products.map(product => (
-        <div key={product.id} className='row'>
-          <div className="col-3">
-            <img className="product-image" src={product.image} alt="" />
-          </div>
-          <div className="col-9">
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-            <div className="price">
-              <h4>PRICE : ${product.price}</h4>
+    <div className="-details.container p-5">
+      {products &&
+        products.map((product) => (
+          <div key={product.id} className="row">
+            <div className="col-3">
+              <img className="product-image" src={product.image} alt="" />
             </div>
-          
-          </div>
-          <Button className="btn btn-dark w-100" variant="primary" type="submit">
-              <Link className="btn btn-dark w-100" to={`/payment`}>Buy Now</Link>
+            <div className="col-9">
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <div className="price">
+                <h4>PRICE : ${product.price}</h4>
+                <div>
+                  count:
+                  <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    min="1"
+                    max="5"
+                    onChange={handelChange}
+                  />
+                </div>
+              </div>
+            </div>
+            <Button
+              className="btn btn-dark w-100"
+              variant="primary"
+              type="submit"
+            >
+              <div
+                onClick={() =>
+                  fun(product.id, product.name, product.price, product.image)
+                }
+              >
+                buy now
+              </div>
             </Button>
-          <hr />
-        </div>
-      ))}
+            <hr />
+          </div>
+        ))}
       <hr />
       <h5 className="text-center bg-dark text-white p-2">Review Products</h5>
-      {products && products.map(product => (
-        <ReviewProduct key={product.id} />
-      ))}
+      {products &&
+        products.map((product) => <ReviewProduct key={product.id} />)}
     </div>
   );
 };
 
 export default Mobiles;
-
 
 ///////////INTEGERATION OF APIS
 

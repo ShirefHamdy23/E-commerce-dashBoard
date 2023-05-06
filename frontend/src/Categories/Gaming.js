@@ -64,7 +64,7 @@ const Gaming = ({ gamings }) => {
                 fun(gaming.id, gaming.name, gaming.price, gaming.image)
               }
             >
-              buy now
+              Add To Cart
             </div>
           </Button>
         </div>

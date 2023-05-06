@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./style/cart.css";
 const Cart = () => {
   const [brands1, setBrands1] = useState("");
@@ -122,6 +123,9 @@ const Cart = () => {
           </div>
         )}
       </div>
+      <Link className="btn btn-dark w-100" to="/payment">
+        Buy Now
+      </Link>
     </>
   );
 };

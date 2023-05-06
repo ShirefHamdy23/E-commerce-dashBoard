@@ -157,7 +157,7 @@ const Mobiles = ({ products }) => {
                   fun(product.id, product.name, product.price, product.image)
                 }
               >
-                buy now
+                Add To Cart
               </div>
             </Button>
             <hr />

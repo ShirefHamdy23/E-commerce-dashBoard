@@ -67,7 +67,7 @@ const Brands = ({ brands }) => {
                     fun(brand.id, brand.name, brand.price, brand.image)
                   }
                 >
-                  buy now
+                  Add To Cart
                 </div>
               </Button>
               <hr />

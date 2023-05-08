@@ -1,44 +1,104 @@
-import React from 'react';
+// import React from 'react';
+// import Alert from "react-bootstrap/Alert"
+// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+// const UpdateProduct = () => {
+//     return ( <div className='login-container'>
+//     <h1>Update Product Form</h1>
+//     <Alert variant="danger" className="p-2">
+//         This is simple alert
+//     </Alert>
+//     <Alert variant="success" className="p-2">
+//         This is simple alert
+//     </Alert>
+//     <Form>
+// <Form.Group className="mb-3">
+
+// <Form.Control type="text" placeholder="Product Name" />
+
+// </Form.Group>
+
+// <Form.Group className="mb-3" >
+//     <textarea placeholder="Description" className="form-control" rows={5}>
+
+//     </textarea>
+// </Form.Group>
+// <Form.Group className="mb-3" >
+//     <input type="file" className="form-control">
+//     </input>    
+// </Form.Group>
+
+// <Button className="btn btn-dark w-100" variant="primary" type="submit">
+// Update Product
+// </Button>
+// </Form>
+// </div>
+//     );
+// };
+// export default UpdateProduct;	
+
+
+import React, { useState } from 'react';
 import Alert from "react-bootstrap/Alert"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+
 const UpdateProduct = () => {
-    return ( <div className='login-container'>
-    <h1>Update Product Form</h1>
-    <Alert variant="danger" className="p-2">
-        This is simple alert
-    </Alert>
-    <Alert variant="success" className="p-2">
-        This is simple alert
-    </Alert>
-    <Form>
-<Form.Group className="mb-3">
+    const [productName, setProductName] = useState('');
+    const [description, setDescription] = useState('');
+    const [imageFile, setImageFile] = useState(null);
 
-<Form.Control type="text" placeholder="Product Name" />
+    const handleProductNameChange = (event) => {
+        setProductName(event.target.value);
+    }
 
-</Form.Group>
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    }
 
-<Form.Group className="mb-3" >
-    <textarea placeholder="Description" className="form-control" rows={5}>
+    const handleImageFileChange = (event) => {
+        setImageFile(event.target.files[0]);
+    }
 
-    </textarea>
-</Form.Group>
-<Form.Group className="mb-3" >
-    <input type="file" className="form-control">
-    </input>    
-</Form.Group>
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Update the product in the database
+        // ...
+        // Clear the form fields
+        setProductName('');
+        setDescription('');
+        setImageFile(null);
+    }
 
-<Button className="btn btn-dark w-100" variant="primary" type="submit">
-Update Product
-</Button>
-</Form>
-</div>
+    return (
+        <div className='login-container'>
+            <h1>Update Product Form</h1>
+            <Alert variant="danger" className="p-2">
+                This is simple alert
+            </Alert>
+            <Alert variant="success" className="p-2">
+                This is simple alert
+            </Alert>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                    <Form.Control type="text" placeholder="Product Name" value={productName} onChange={handleProductNameChange} />
+                </Form.Group>
+                <Form.Group className="mb-3" >
+                    <textarea placeholder="Description" className="form-control" rows={5} value={description} onChange={handleDescriptionChange}></textarea>
+                </Form.Group>
+                <Form.Group className="mb-3" >
+                    <input type="file" className="form-control" onChange={handleImageFileChange} />
+                </Form.Group>
+                <Button className="btn btn-dark w-100" variant="primary" type="submit">
+                    Update Product
+                </Button>
+            </Form>
+        </div>
     );
 };
-export default UpdateProduct;	
 
-
-
+export default UpdateProduct;
+//-------
 
 
 //////INTEGERATION OF APIS

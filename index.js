@@ -13,7 +13,7 @@ app.use(express.static('uploads'));
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
-app.set('front-end', '/front-end');
+app.set('frontend', '/frontend');
 const auth = require("./routes/Auth");
 const { cookie } = require("express-validator");
 

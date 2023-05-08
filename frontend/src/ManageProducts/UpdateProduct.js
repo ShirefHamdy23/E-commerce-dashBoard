@@ -46,6 +46,8 @@ import Form from 'react-bootstrap/Form';
 const UpdateProduct = () => {
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
+    const [ProductPrice, setPrice] = useState('');
+
     const [imageFile, setImageFile] = useState(null);
 
     const handleProductNameChange = (event) => {
@@ -54,6 +56,9 @@ const UpdateProduct = () => {
 
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
+    }
+    const handleProductPriceChange = (event) => {
+        setPrice(event.target.value);
     }
 
     const handleImageFileChange = (event) => {
@@ -67,24 +72,23 @@ const UpdateProduct = () => {
         // Clear the form fields
         setProductName('');
         setDescription('');
+        setPrice('');
+
         setImageFile(null);
     }
 
     return (
         <div className='login-container'>
             <h1>Update Product Form</h1>
-            <Alert variant="danger" className="p-2">
-                This is simple alert
-            </Alert>
-            <Alert variant="success" className="p-2">
-                This is simple alert
-            </Alert>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Control type="text" placeholder="Product Name" value={productName} onChange={handleProductNameChange} />
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <textarea placeholder="Description" className="form-control" rows={5} value={description} onChange={handleDescriptionChange}></textarea>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Control type="text" placeholder="Price" value={ProductPrice} onChange={handleProductPriceChange} />
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <input type="file" className="form-control" onChange={handleImageFileChange} />

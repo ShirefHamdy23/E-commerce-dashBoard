@@ -1,78 +1,3 @@
-// import {React,useEffect,useState} from 'react';
-// import { Form } from 'react-bootstrap';
-// import Card from 'react-bootstrap/Card';
-// import { Link } from 'react-router-dom';
-// import '../component/style/ProductCard.css';
-// import Button from 'react-bootstrap/Button';
-// import ReviewProduct from '../ReviewProduct';
-// import '../component/style/Mobiles.css'
-
-// import ProductCard from '../ProductCard';
-// // import Spinner from 'react-bootstrap/Spinner';
-// const Home =() =>{
-//     const [products, setProducts] = useState([]);
-
-//   useEffect(() => {
-//     const productsData = JSON.parse(localStorage.getItem("products")) || [];
-//     setProducts(productsData);
-//   }, []);
-  
-//     return(
-//         <div className="home-container px-5">
-           
-                    
-//             {/* <Spinner animation="border" role="status" >
-//             <span className="visually-hidden">Loading...</span>
-//           </Spinner> */}
-        
-            
-                
-//  <>
-//                     <Form >
-
-//                     <Form.Group className="mb-3 d-flex">
-//                         <Form.Control type="text" required  placeholder="Search About Products" className="rounded-0"
-//                          />
-//                         <button className="btn btn-dark rounded-0">Search</button>
-    
-//                     </Form.Group>
-//                 </Form>
-//             <div className="row">
-//                 <div className="col-3 card-movie-container">
-//                 <ProductCard/>
-//                 <div className="images-1">
-//       {products.map((product) => (
-//         <Card key={product.title}>
-//           <Card.Img className="firstbrand" variant="top" src={product.image} />
-//           <Card.Body>
-//             <Card.Title>{product.name}</Card.Title>
-//             <Card.Text>{product.description}</Card.Text>
-//             <Card.Text>Price : ${product.price}</Card.Text>
-
-         
-//           </Card.Body>
-//         </Card>
-//       ))}
-//     </div>
-//     </div>
-
-//     </div>
-
-    
-        
-
-// </>
-                
-            
-           
-            
-
-         
-//         </div>
-    
-//     );
-// };
-// export default Home;
 
 
 import {React,useEffect,useState} from 'react';
@@ -81,7 +6,6 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import '../component/style/ProductCard.css';
 import Button from 'react-bootstrap/Button';
-import ReviewProduct from '../ReviewProduct';
 import '../component/style/Mobiles.css'
 
 import ProductCard from '../ProductCard';
@@ -111,7 +35,7 @@ const Home =() =>{
 
             {products.filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase())).map((product) => (
               
-              <Card key={product.title}>
+              <Card key={product.id}>
                 <Card.Img className="firstbrand" variant="top" src={product.image} />
                 <Card.Body>
                   <Card.Title>{product.name}</Card.Title>

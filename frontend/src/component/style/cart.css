@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.container > div {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ddd;
+  padding: 20px;
+  border-radius: 23px;
+  margin: 20px;
+  justify-content: center;
+  width: 45%;
+  flex-wrap: wrap;
+}
+.container > div > div {
+  margin: 5px;
+}
+img {
+  width: 20em;
+}

@@ -3,12 +3,13 @@ const db = require('../DB/dbConnection');
 const mysql = require("mysql");
 const { Result } = require('express-validator');
 const { connection } = require('../DB/dbConnection');
+const verify = require('../middleware/verify.js');
 const { log } = require('console');
 const categoryRouter = express.Router();//focus
 
 
 
-categoryRouter.get('/readSpecificRow', async (req, res, next) => {//read
+categoryRouter.get('/readSpecificRow',verify,async (req, res, next) => {//read
     var categoryID = req.body.id //here
     //here
     await db.query('SELECT * FROM category WHERE categoryID = ?' , [categoryID], async function (error, results, fields) {
@@ -34,7 +35,7 @@ categoryRouter.get('/readSpecificRow', async (req, res, next) => {//read
         }
     });
 })
-categoryRouter.get('/', async (req, res, next) => {//read
+categoryRouter.get('/', verify ,async (req, res, next) => {//read
     await db.query('SELECT * FROM category', async function (error, results, fields) {
         console.log(results);
         console.log(results[0]['name']);
@@ -49,7 +50,7 @@ categoryRouter.get('/', async (req, res, next) => {//read
 
 })
 
-categoryRouter.post('/', async (req, res, next) => {//create
+categoryRouter.post('/',verify , async (req, res, next) => {//create
     var name = req.body.name
     await db.query('SELECT * FROM category WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);
@@ -68,7 +69,7 @@ categoryRouter.post('/', async (req, res, next) => {//create
 
 })
 
-categoryRouter.put('/', async (req, res, next) => {//update
+categoryRouter.put('/', verify ,async (req, res, next) => {//update
     var finder = req.body.id
     data = {}
     var name = req.body.name;
@@ -122,7 +123,7 @@ categoryRouter.put('/', async (req, res, next) => {//update
     });
 })
 
-categoryRouter.delete('/', async (req, res, next) => {//delete
+categoryRouter.delete('/', verify ,async (req, res, next) => {//delete
     var name = req.body.name
     await db.query('SELECT * FROM category WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);

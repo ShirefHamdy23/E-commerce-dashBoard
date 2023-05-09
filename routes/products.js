@@ -1,14 +1,14 @@
 const express = require('express');
 const db = require('../DB/dbConnection');
+const verify = require('../middleware/verify.js');
 const mysql = require("mysql");
 const { Result } = require('express-validator');
 const { connection } = require('../DB/dbConnection');
 const { log } = require('console');
 const crudRouter = express.Router(); //new like this
 
-
 //edit like this
-crudRouter.get('/readSpecificRow', async (req, res, next) => {//read
+crudRouter.get('/readSpecificRow',verify , async (req, res, next) => {//read
     var name = req.body.name
     await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);
@@ -29,7 +29,7 @@ crudRouter.get('/readSpecificRow', async (req, res, next) => {//read
     });
 })
 
-crudRouter.get('/', async (req, res, next) => {//read
+crudRouter.get('/', verify ,async (req, res, next) => {//read
     await db.query('SELECT * FROM products', async function (error, results, fields) {
         console.log(results);
         console.log(results[0]['name']);
@@ -51,7 +51,7 @@ crudRouter.get('/', async (req, res, next) => {//read
 
 
 
-crudRouter.post('/', async (req, res, next) => {//create
+crudRouter.post('/', verify ,async (req, res, next) => {//create
     var name = req.body.name
     await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);
@@ -71,7 +71,7 @@ crudRouter.post('/', async (req, res, next) => {//create
 
 
 
-crudRouter.put('/', async (req, res, next) => {//update
+crudRouter.put('/',verify , async (req, res, next) => {//update
     var finder = req.body.id
     data = {}
     var name = req.body.name;
@@ -126,7 +126,7 @@ crudRouter.put('/', async (req, res, next) => {//update
 })
 
 
-crudRouter.delete('/', async (req, res, next) => {//delete
+crudRouter.delete('/', verify ,async (req, res, next) => {//delete
     var name = req.body.name
     await db.query('SELECT * FROM products WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);

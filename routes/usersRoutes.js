@@ -1,8 +1,11 @@
 const express = require("express");
 const mysql = require("mysql");
 const db = require("../DB/dbConnection");
+const verify = require('../middleware/verify.js');
 const { Result } = require("express-validator");
-const { connection } = require("../DB/dbConnection");
+const {jwtSecret} = require("../config");
+const jwt = require("jsonwebtoken");
+//const signJwt = promisify(jwt.sign);
 const router = express.Router();
 
 router.post('/signup', async (req, res, next) => {
@@ -12,7 +15,6 @@ router.post('/signup', async (req, res, next) => {
         var keys = Object.keys(results);
         var len = keys.length;
         if (len == 0) { 
-            console.log("gdgdgdg");
             const sqlInsert = "INSERT INTO users(firstName, lastName, email, password, phone, type, status)VALUES (?,?,?,?,?,'user','active')"
             const insert_query = mysql.format(sqlInsert, [req.body.firstName,req.body.lastName,req.body.email,req.body.password,req.body.phone])
             console.log(insert_query);
@@ -29,18 +31,28 @@ router.post('/signup', async (req, res, next) => {
 router.post('/signIn', async (request, response, next) => {
     var email = request.body.email;
     var password = request.body.password;
+
     if (email && password) {
-        await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (error, results, fields) => {
+        await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], async(error, results, fields) => {
             var keys = Object.keys(results);
             var len = keys.length;
             console.log(results);
             if (len != 0) {
                 emailFromQuery = results[0]["email"];
+                idFromQuery = results[0]["id"];
                 if (emailFromQuery == email) {
                     console.log('email correct');
                     if (results[0]["password"] == password) {
                         //response.redirect('/home')
-                        response.send('password correct');
+                        const payload = { id: idFromQuery};
+                        console.log(payload);
+                        console.log(idFromQuery);
+                        const token = await jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
+                        response.json({
+                            message: "logged in",
+                            token,
+                            email,
+                        });
                     } else {
                         response.send('password incorrect');
                     }
@@ -54,5 +66,6 @@ router.post('/signIn', async (request, response, next) => {
     } else {
         response.send('Please enter email and/or Password!');
     }
+    
 });
 module.exports = router;

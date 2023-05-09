@@ -14,7 +14,6 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 app.set('frontend', '/frontend');
-const auth = require("./routes/Auth");
 const { cookie } = require("express-validator");
 
 app.listen(5500,"localhost",()=>{

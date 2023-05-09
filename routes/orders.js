@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require('../DB/dbConnection');
+const verify = require('../middleware/verify.js');
 const mysql = require("mysql");
 const { Result } = require('express-validator');
 const { connection } = require('../DB/dbConnection');
@@ -8,7 +9,7 @@ const ordersRouter = express.Router();
 
 
 
-ordersRouter.get('/readSpecificRow', async (req, res, next) => {//read
+ordersRouter.get('/readSpecificRow',verify, async (req, res, next) => {//read
     var orderID = req.body.orderID
     await db.query('SELECT * FROM orders WHERE orderID = ?', [orderID], async function (error, results, fields) {
         var keys = Object.keys(results);
@@ -31,7 +32,7 @@ ordersRouter.get('/readSpecificRow', async (req, res, next) => {//read
 })
 
 
-ordersRouter.get('/', async (req, res, next) => {//read
+ordersRouter.get('/', verify ,async (req, res, next) => {//read
     await db.query('SELECT * FROM orders', async function (error, results, fields) {
         console.log(results);
         var keys = Object.keys(results);
@@ -45,7 +46,7 @@ ordersRouter.get('/', async (req, res, next) => {//read
 })
 
 
-ordersRouter.post('/', async (req, res, next) => {//create
+ordersRouter.post('/', verify ,async (req, res, next) => {//create
     var orderID = req.body.orderID
     await db.query('SELECT * FROM orders WHERE orderID = ?', [orderID], async function (error, results, fields) {
         var keys = Object.keys(results);
@@ -64,7 +65,7 @@ ordersRouter.post('/', async (req, res, next) => {//create
 })
 
 
-ordersRouter.put('/', async (req, res, next) => {//update
+ordersRouter.put('/', verify ,async (req, res, next) => {//update
     var finder = req.body.id
     data = {}
     var orderID = req.body.orderID;
@@ -125,7 +126,7 @@ ordersRouter.put('/', async (req, res, next) => {//update
 })
 
 
-ordersRouter.delete('/', async (req, res, next) => {//delete
+ordersRouter.delete('/', verify ,async (req, res, next) => {//delete
     var orderID = req.body.orderID
     await db.query('SELECT * FROM orders WHERE orderID = ?', [orderID], async function (error, results, fields) {
         var keys = Object.keys(results);

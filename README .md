@@ -1,5 +1,5 @@
 # E-commerce-Dashboard
-nodemon .index.js localhost 5500
+nodemon -x 'node index.js || copy /b index.js +,,'
 
 *API :*
 localhost:5500/crud/ -> Use post / put / delete / get  Methods on postman 
@@ -11,3 +11,10 @@ localhost:5500/crud/ -> Use post / put / delete / get  Methods on postman
 localhost:5500/users/signup -> Already known to you 
 localhost:5500/users/signIn -> Already known to you
  
+GET all products: http://localhost:5500/products
+GET a specific product by name: http://localhost:5500/products/readSpecificRow
+POST a new product: http://localhost:5500/products
+PUT update an existing product: http://localhost:5500/products
+DELETE a product: http://localhost:5500/products
+
+

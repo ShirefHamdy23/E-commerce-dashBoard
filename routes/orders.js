@@ -6,10 +6,16 @@ const { Result } = require('express-validator');
 const { connection } = require('../DB/dbConnection');
 const { log } = require('console');
 const ordersRouter = express.Router();
+const { Table } = require('./Table');
 
+class orders extends Table {
+    constructor(connection) {
+        super(connection, "orders");
+        this.orders = orders;
+    }
+}
 
-
-ordersRouter.get('/readSpecificRow',verify, async (req, res, next) => {//read
+ordersRouter.get('/readSpecificRow', async (req, res, next) => {//read
     var orderID = req.body.orderID
     await db.query('SELECT * FROM orders WHERE orderID = ?', [orderID], async function (error, results, fields) {
         var keys = Object.keys(results);
@@ -20,7 +26,7 @@ ordersRouter.get('/readSpecificRow',verify, async (req, res, next) => {//read
             await db.query(insert_query, (error, results, fields) => {
                 keys.forEach(function (key) {
                     var result = results[key];
-                    console.log( "orders Price : " + result.price + "\norders date : " + result.date + "\norders SKU :  " + result.sku + "\norder id :  " + result.id + "\nproducts id :  " + result.id  + "\nuser id :  " + result.id )
+                    console.log("orders Price : " + result.price + "\norders date : " + result.date + "\norders SKU :  " + result.SKU + "\norder id :  " + result.orderID + "\nproducts id :  " + result.userID + "\nuser id :  " + result.userID)
                 });
                 res.send('orders Exist');
             });
@@ -32,28 +38,31 @@ ordersRouter.get('/readSpecificRow',verify, async (req, res, next) => {//read
 })
 
 
-ordersRouter.get('/', verify ,async (req, res, next) => {//read
+ordersRouter.get('/', async (req, res, next) => {//read
     await db.query('SELECT * FROM orders', async function (error, results, fields) {
         console.log(results);
         var keys = Object.keys(results);
         var len = keys.length;
-        keys.forEach(function (key) {
-            var result = results[key];
-            console.log( "orders Price : " + result.price + "\norders date : " + result.date + "\norders SKU :  " + result.SKU + "\norders id :  " + result.orderID + "\nproducts id :  " + result.pID  + "\nuser id :  " + result.userID )
-        });
-        res.send('check terminal');
+        if (len != 0) {
+            keys.forEach(function (key) {
+                var result = results[key];
+                return res.status(200).json({ data: results });
+            });
+        } else {
+            return res.end("DATA IS EMPTY !!");
+        }
     });
 })
 
 
-ordersRouter.post('/', verify ,async (req, res, next) => {//create
+ordersRouter.post('/', async (req, res, next) => {//create
     var orderID = req.body.orderID
     await db.query('SELECT * FROM orders WHERE orderID = ?', [orderID], async function (error, results, fields) {
         var keys = Object.keys(results);
         var len = keys.length;
         if (len == 0) {
-            const sqlInsert = "INSERT INTO orders(orderID, price, SKU, date, pID, userID)VALUES (?,?,?,?,?,?)"
-            const insert_query = mysql.format(sqlInsert, [req.body.orderID, req.body.price, req.body.sku, req.body.date, req.body.pID, req.body.userID])
+            const sqlInsert = "INSERT INTO orders(price, SKU, pID, userID)VALUES (?,?,?,?)"
+            const insert_query = mysql.format(sqlInsert, [req.body.price, req.body.SKU, req.body.pID, req.body.userID])
             console.log(insert_query);
             await db.query(insert_query, (error, results, fields) => {
                 res.send('order added');
@@ -65,12 +74,11 @@ ordersRouter.post('/', verify ,async (req, res, next) => {//create
 })
 
 
-ordersRouter.put('/', verify ,async (req, res, next) => {//update
+ordersRouter.put('/', async (req, res, next) => {//update
     var finder = req.body.id
     data = {}
     var orderID = req.body.orderID;
     var price = req.body.price;
-    var data = req.body.date;
     var pID = req.body.pID;
     var userID = req.body.userID;
 
@@ -81,10 +89,6 @@ ordersRouter.put('/', verify ,async (req, res, next) => {//update
     if (price != null) {
         price = req.body.price
         data['price'] = price;
-    }
-    if (date != null) {
-        date = req.body.date
-        data['date'] = date;
     }
     if (pID != null) {
         pID = req.body.pID
@@ -126,7 +130,7 @@ ordersRouter.put('/', verify ,async (req, res, next) => {//update
 })
 
 
-ordersRouter.delete('/', verify ,async (req, res, next) => {//delete
+ordersRouter.delete('/', async (req, res, next) => {//delete
     var orderID = req.body.orderID
     await db.query('SELECT * FROM orders WHERE orderID = ?', [orderID], async function (error, results, fields) {
         var keys = Object.keys(results);

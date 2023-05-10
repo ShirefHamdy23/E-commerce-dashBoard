@@ -39,19 +39,15 @@ router.post('/signIn', async (request, response, next) => {
             console.log(results);
             if (len != 0) {
                 emailFromQuery = results[0]["email"];
-                idFromQuery = results[0]["id"];
+                type = results[0]["type"];
                 if (emailFromQuery == email) {
                     console.log('email correct');
                     if (results[0]["password"] == password) {
                         //response.redirect('/home')
-                        const payload = { id: idFromQuery};
-                        console.log(payload);
-                        console.log(idFromQuery);
-                        const token = await jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
                         response.json({
                             message: "logged in",
-                            token,
                             email,
+                            type
                         });
                     } else {
                         response.send('password incorrect');

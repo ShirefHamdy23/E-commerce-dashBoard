@@ -6,13 +6,18 @@ const { connection } = require('../DB/dbConnection');
 const verify = require('../middleware/verify.js');
 const { log } = require('console');
 const categoryRouter = express.Router();//focus
+const { Table } = require('./Table');
 
-
-
-categoryRouter.get('/readSpecificRow',verify,async (req, res, next) => {//read
+class category extends Table {
+    constructor(connection) {
+        super(connection, "category");
+        this.category = category;
+    }
+}
+categoryRouter.get('/readSpecificRow', async (req, res, next) => {//read
     var categoryID = req.body.id //here
     //here
-    await db.query('SELECT * FROM category WHERE categoryID = ?' , [categoryID], async function (error, results, fields) {
+    await db.query('SELECT * FROM category WHERE categoryID = ?', [categoryID], async function (error, results, fields) {
         var keys = Object.keys(results);
         var len = keys.length;
         if (len != 0) {
@@ -35,22 +40,25 @@ categoryRouter.get('/readSpecificRow',verify,async (req, res, next) => {//read
         }
     });
 })
-categoryRouter.get('/', verify ,async (req, res, next) => {//read
+categoryRouter.get('/', async (req, res, next) => {//read
     await db.query('SELECT * FROM category', async function (error, results, fields) {
         console.log(results);
         console.log(results[0]['name']);
         var keys = Object.keys(results);
         var len = keys.length;
-        keys.forEach(function (key) {
-            var result = results[key];
-            console.log("category name : " + result.name + "\ncategory title : " + result.title + "\ncategory Description : " + result.description + "\n")
-        });
-        res.send('check terminal');
+        if (len != 0) {
+            keys.forEach(function (key) {
+                var result = results[key];
+                return res.status(200).json({ data: results });
+            });
+        } else {
+            return res.end("DATA Is EM?PTY !!");
+        }
     });
 
 })
 
-categoryRouter.post('/',verify , async (req, res, next) => {//create
+categoryRouter.post('/', async (req, res, next) => {//create
     var name = req.body.name
     await db.query('SELECT * FROM category WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);
@@ -69,7 +77,7 @@ categoryRouter.post('/',verify , async (req, res, next) => {//create
 
 })
 
-categoryRouter.put('/', verify ,async (req, res, next) => {//update
+categoryRouter.put('/', async (req, res, next) => {//update
     var finder = req.body.id
     data = {}
     var name = req.body.name;
@@ -123,7 +131,7 @@ categoryRouter.put('/', verify ,async (req, res, next) => {//update
     });
 })
 
-categoryRouter.delete('/', verify ,async (req, res, next) => {//delete
+categoryRouter.delete('/', async (req, res, next) => {//delete
     var name = req.body.name
     await db.query('SELECT * FROM category WHERE name = ?', [name], async function (error, results, fields) {
         var keys = Object.keys(results);
